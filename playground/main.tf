@@ -1,3 +1,14 @@
+terraform {
+  required_version = ">= 1.0.0, < 2.0.0"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
 provider "aws" {
   region =  "us-east-2"
 }
@@ -66,12 +77,6 @@ resource "aws_vpc_security_group_ingress_rule" "example" {
   cidr_ipv4 = "0.0.0.0/0"
   from_port = var.server_port
   to_port = var.server_port
-}
-
-variable "server_port" {
-  description = "The port the server will use for HTTP requests"
-  type = number
-  default = 8080
 }
 
 # my: Create ALB in all subnets of default VPC
