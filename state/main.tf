@@ -8,14 +8,15 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket = "myplayground-tf-state"
-    key = "global/s3/terraform.tfstate"
-    region = "us-east-2"
-
-    dynamodb_table = "myplayground-tf-locks"
-    encrypt = true
-  }
+  // This comes into the main file where the relevant resources are created
+  # backend "s3" {
+  #   bucket = "myplayground-tf-state"
+  #   key = "global/s3/terraform.tfstate"
+  #   region = "us-east-2"
+ 
+  #   dynamodb_table = "myplayground-tf-locks"
+  #   encrypt = true
+  # }
 }
 
 provider "aws" {
@@ -24,7 +25,9 @@ provider "aws" {
 
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "myplayground-tf-state"
-  
+
+  // This is only here so we can destroy the bucket as part of automated tests. You should not copy this for production
+  // usage
   force_destroy = true
 }
 
